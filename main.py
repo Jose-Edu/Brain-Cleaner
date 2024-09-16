@@ -1,11 +1,12 @@
 from utilities import *
+from os import remove
 from bc_compiler import brain_cleaner_build
 
 
 # region set mid-code
 
 with open("code.bc", 'r') as code_bc: # create temp.bcm
-    with open("temp.bcm", 'x') as temp:
+    with open("temp.bc", 'x') as temp:
         for lc in range(get_file_lines("code.bc")):
             line_text = code_bc.readline()
 
@@ -19,9 +20,9 @@ with open("code.bc", 'r') as code_bc: # create temp.bcm
 
 # region write BF
 
-with open("temp.bcm", 'r') as code_temp:
+with open("temp.bc", 'r') as code_temp:
     with open("code.bf", 'x') as code_bf:
-        for lc in range(get_file_lines("temp.bcm")):
+        for lc in range(get_file_lines("temp.bc")):
             line_bc = code_temp.readline()
 
             code_bf.write(
@@ -29,3 +30,5 @@ with open("temp.bcm", 'r') as code_temp:
             )
 
 # endregion
+
+remove("temp.bc")
