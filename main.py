@@ -3,18 +3,29 @@ from os import remove
 from bc_compiler import brain_cleaner_build
 
 
-# region set mid-code
+# region set temp-code
 
 with open("code.bc", 'r') as code_bc: # create temp.bcm
+
+    code = code_bc.read()
+
     with open("temp.bc", 'x') as temp:
-        for lc in range(get_file_lines("code.bc")):
-            line_text = code_bc.readline()
 
-            line_text = line_text.replace(' ', '')
-            line_text = line_text.replace('\n', '')
-            line_text = line_text.replace(';', '\n')
+        code = code.replace(' ', '')
+        code = code.replace('\n', '')
 
-            temp.write(line_text)
+        while True:
+            start = code.find("/*")
+
+            if start == -1:
+                break
+            else:
+                end = code.find("*/")+1
+                code = code.replace(code[start:end+1], '')
+            
+        code = code.replace('};', '}\n')
+        
+        temp.write(code)
             
 # endregion
 

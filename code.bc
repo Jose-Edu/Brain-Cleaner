@@ -1,6 +1,3 @@
-bfMacro: {
-    (+10)
-    (>5)
-    (<5)
-    [-]
-};
+/*Brain Cleaner Hello World*/
+
+Write("Hello World!");
