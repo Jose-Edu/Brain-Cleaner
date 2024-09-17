@@ -1,8 +1,14 @@
 def get_file_lines(file) -> int:
-    with open(file, 'r') as file: lines = len(file.readlines())
+    with open(file, 'r', encoding="UTF-8") as file: lines = len(file.readlines())
     return lines
 
 
 def count_moves(bf_block) -> int:
     return bf_block.count(">") - bf_block.count("<")
 
+
+def get_str(string) -> str:
+    _return = string[1:-1]
+    _return = _return.replace("\\", "")
+
+    return _return

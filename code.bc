@@ -1,3 +1,14 @@
-/*Brain Cleaner Hello World*/
+/*Brain Cleaner: My code */
 
-Write("Hello World!");
+Write:("Start loop! ");
+
+repeat: (10) {
+
+    Write:("Text1 ");
+    Write:("Text2, using ;");
+
+};
+
+bf: {[-]};
+
+Write:("End loop!");

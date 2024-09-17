@@ -1,12 +1,16 @@
-bf: {
-    (+10)
-    (>5)
-    <<<<<
-    [-]
+/* code start */
+repeat (5) {
+
+    Write("Start repeat!"); /* block 1 */
+
+    repeat: (3) {
+        bf: {->};
+    }; /* block 2 */
+
+    Write("End repeat!"); /* block 3 */
+
 };
+/* code end */
 
-repeat: (10) {
-
-    (+5)>
-
-};
+/* resul: */
+/* repeat(5){Write("Start repeat!");repeat:(3){bf:{->};};Write("End repeat!");}; */

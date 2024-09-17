@@ -20,15 +20,44 @@ def bf(block) -> str:
 
 def repeat(parameters, block) -> str:
     loops = parameters[0]
-    return bf(f"(+{loops})[{block}(<{count_moves(block)})-]")
+    move_back = "<"*count_moves(block) if count_moves(block) >= 0 else ">"*(count_moves(block)*-1)
+    return bf(f"(+{loops})[{block}{move_back}-]")
 
 
 def Write(parameters) -> str:
 
-    _return = "[-]"
+    string = get_str(parameters[0])
+    _return = bf("(+20)>")
+    memory = 0
 
-    for ascii_num in [ord(c) for c in parameters[0]]:
-        _return += bf(f"(+{ascii_num}).[-]")
+    for ascii_num in [ord(c) for c in string]:
+
+        while True:
+            if ascii_num == 20:
+                _return += "<.>"
+                break
+
+            if ascii_num == memory:
+                _return += '.'
+                break
+            elif ascii_num > memory and ascii_num-memory <= 127:
+                _return += '+'
+                memory += 1
+            else:
+                _return += '-'
+                memory -= 1
+
+            if memory > 255:
+                memory = 0
+            elif memory < 0:
+                memory = 255
+
+    if memory >= 128:
+        _return += "[+]"
+    else:
+        _return += "[-]"
+
+    _return += "<[-]"
 
     return _return
 
@@ -41,15 +70,28 @@ def brain_cleaner_build(code_line) -> str:
         block = code_line[code_line.find('{')+1: code_line.find('}')]
         exec_data = {"repeat": repeat}
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
+
+        for index, par in enumerate(parameters):
+            parameters[index] = par.replace("\x8D", ",")
+
         exec(f"r = {command}({parameters}, '{block}')", {}, exec_data)
+    
     elif command in ("bf"): # blocks without parameters
         block = code_line[code_line.find('{')+1:code_line.find('}')]
         exec_data = {"bf": bf}
         exec(f"r = {command}('{block}')", {}, exec_data)
-    else: # functions
+
+    else: # functions with parameters
         exec_data = {"Write": Write}
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
+
+        for index, par in enumerate(parameters):
+            parameters[index] = par.replace("☻", ",")
+        
         exec(f"r = {command}({parameters})", {}, exec_data)
 
     return exec_data['r']
 
+
+def descompile_block(block) -> str:
+    pass
