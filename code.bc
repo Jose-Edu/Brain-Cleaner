@@ -1,14 +1,20 @@
-/*Brain Cleaner: My code */
+/* Brain Cleaner: My code with scopes */
 
-Write:("Start loop! ");
+Write:("I'll enter into 1 "); /* 0 */
 
-repeat: (10) {
+repeat: (10) { /* 1 */
 
-    Write:("Text1 ");
-    Write:("Text2, using ;");
+    Write:("I'll enter into 1-1 "); /* 1-0 */
+
+    repeat: (5) { 
+        Write:("Text repeat 1 "); /* 1-1-0 */
+        Write:("Text repeat 2 "); /* 1-1-1 */
+    };
+
+    Write:("Getting out of 1-1 and from 1 "); /* 1-2 */
 
 };
 
-bf: {[-]};
+bf: {[-]}; /* 2 */
 
-Write:("End loop!");
+Write:("Ending system..."); /* 3 */

@@ -10,7 +10,7 @@ with open("code.bc", 'r', encoding="UTF-8") as code_bc: # create temp.bcm
 
     code = code_bc.read()
 
-    with open("temp.bcm", 'x', encoding="UTF-8") as temp:
+    with open("./output/temp.bcm", 'x', encoding="UTF-8") as temp:
 
         while True: # remove comments
             start = code.find("/*")
@@ -41,14 +41,7 @@ with open("code.bc", 'r', encoding="UTF-8") as code_bc: # create temp.bcm
         code = code.replace('\n', '') # set all the code in 1 line
 
         # split the code in lines
-        scope = 0
-        for index, char in enumerate(code):
-            if char in ('{', '('):
-                scope += 1
-            elif char in ('}', ')'):
-                scope -= 1
-            elif char == ';' and scope == 0:
-                code = code[:index]+'\n'+code[index+1:]
+        code = set_inline_code(code)
 
         code = code.replace("☺", " ") # returns the whitespaces for the strings
         code = code.replace("Ώ", ";") # returns the interns ; in the code
@@ -59,15 +52,15 @@ with open("code.bc", 'r', encoding="UTF-8") as code_bc: # create temp.bcm
 
 # region write BF
 
-with open("temp.bcm", 'r', encoding="UTF-8") as code_temp:
-    with open("code.bf", 'x', encoding="UTF-8") as code_bf:
-        for lc in range(get_file_lines("temp.bcm")):
+with open("./output/temp.bcm", 'r', encoding="UTF-8") as code_temp:
+    with open("./output/main.bf", 'w', encoding="UTF-8") as main_bf:
+        for lc in range(get_file_lines("./output/temp.bcm")):
             line_bc = code_temp.readline()
 
-            code_bf.write(
-                brain_cleaner_build(line_bc)
+            main_bf.write(
+                brain_cleaner_build(line_bc, str(lc))
             )
 
 # endregion
 
-#remove("temp.bcm")
+remove("./output/temp.bcm")

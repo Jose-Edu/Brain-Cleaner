@@ -20,8 +20,8 @@ def bf(block) -> str:
 
 def repeat(parameters, block) -> str:
     loops = parameters[0]
-    move_back = "<"*count_moves(block) if count_moves(block) >= 0 else ">"*(count_moves(block)*-1)
-    return bf(f"(+{loops})[{block}{move_back}-]")
+    move_back = "<"*(count_moves(block)+1) if count_moves(block) >= 0 else ">"*((count_moves(block)*-1)-1)
+    return bf(f"(+{loops})[>{block}{move_back}-]")
 
 
 def Write(parameters) -> str:
@@ -62,36 +62,44 @@ def Write(parameters) -> str:
     return _return
 
 
-def brain_cleaner_build(code_line) -> str:
+def brain_cleaner_build(code_line, scope) -> str:
     
     command = code_line[:code_line.find(':')]
 
     if command in ("repeat"): # blocks with parameters
-        block = code_line[code_line.find('{')+1: code_line.find('}')]
+        block = code_line[code_line.find('{')+1:code_line.rfind('}')]
+        block = enter_scope(block, scope)
+
         exec_data = {"repeat": repeat}
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
-
-        for index, par in enumerate(parameters):
-            parameters[index] = par.replace("\x8D", ",")
 
         exec(f"r = {command}({parameters}, '{block}')", {}, exec_data)
     
     elif command in ("bf"): # blocks without parameters
-        block = code_line[code_line.find('{')+1:code_line.find('}')]
+        block = code_line[code_line.find('{')+1:code_line.rfind('}')]
+        block = enter_scope(block, scope)
+
         exec_data = {"bf": bf}
+
         exec(f"r = {command}('{block}')", {}, exec_data)
 
     else: # functions with parameters
         exec_data = {"Write": Write}
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
-
-        for index, par in enumerate(parameters):
-            parameters[index] = par.replace("☻", ",")
         
         exec(f"r = {command}({parameters})", {}, exec_data)
 
     return exec_data['r']
 
 
-def descompile_block(block) -> str:
-    pass
+def enter_scope(code, scope) -> str:
+    new_scope = scope+"-0"
+
+    code_inline = set_inline_code(code)
+
+    _return = ""
+
+    for line_bc in code_inline.split('\n')[:-1]:
+        _return += brain_cleaner_build(line_bc, new_scope[:new_scope.rfind('-')+1]+ str(int(new_scope[new_scope.rfind('-')+1:]) + 1))
+
+    return _return
