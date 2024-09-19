@@ -1,17 +1,16 @@
-/* Sample code: Brain Cleaner */
+bf: {
 
-Write:("Hello World!"); /* Hello World in Brain Cleaner*/
-
-repeat:(5) { /* Write "Look, i'm at a loop!" 5 times */
-
-    Write:("Look, i'm at a loop! ");
-
+    -
+    >
+    (-13)[(+13)>
 };
 
-bf: { /* BF code that write " ..." and clean the memory*/
-    (+32) /* That's a Brain Cleaner Macro to "++++++++++++++++++++++++++++++++" */
-    .
-    (+14)
-    ...
-    [-]
+FindLast:(255);
+
+bf: {
+    >+
+    [>]
+    ,.
+    (-13)]
+    >
 };

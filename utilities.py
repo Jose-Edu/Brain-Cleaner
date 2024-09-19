@@ -40,3 +40,17 @@ def set_inline_code(code) -> str:
 
     return _code
 
+
+def opcional_parameter_bool(parameters, index, default) -> bool | None:
+    try:
+        if parameters[index] == "true":
+            value = True
+        elif parameters[index] == "false":
+            value = False
+        else:
+            raise ValueError
+    except IndexError:
+        value = default
+    
+    return value
+
