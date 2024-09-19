@@ -53,22 +53,22 @@ def Write(parameters) -> str:
                 memory = 255
 
     if memory >= 128:
-        _return += "[+]"
+        _return += bf(f"(+{255-memory})")
     else:
-        _return += "[-]"
+        _return += bf(f"(-{memory})")
 
-    _return += "<[-]"
+    _return += bf("<(-20)")
 
     return _return
 
 
-def brain_cleaner_build(code_line, scope) -> str:
+def brain_cleaner_build(code_line) -> str:
     
     command = code_line[:code_line.find(':')]
 
     if command in ("repeat"): # blocks with parameters
         block = code_line[code_line.find('{')+1:code_line.rfind('}')]
-        block = enter_scope(block, scope)
+        block = enter_scope(block)
 
         exec_data = {"repeat": repeat}
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
@@ -77,7 +77,7 @@ def brain_cleaner_build(code_line, scope) -> str:
     
     elif command in ("bf"): # blocks without parameters
         block = code_line[code_line.find('{')+1:code_line.rfind('}')]
-        block = enter_scope(block, scope)
+        if command != "bf": block = enter_scope(block)
 
         exec_data = {"bf": bf}
 
@@ -92,14 +92,13 @@ def brain_cleaner_build(code_line, scope) -> str:
     return exec_data['r']
 
 
-def enter_scope(code, scope) -> str:
-    new_scope = scope+"-0"
+def enter_scope(code) -> str:
 
     code_inline = set_inline_code(code)
 
     _return = ""
 
     for line_bc in code_inline.split('\n')[:-1]:
-        _return += brain_cleaner_build(line_bc, new_scope[:new_scope.rfind('-')+1]+ str(int(new_scope[new_scope.rfind('-')+1:]) + 1))
+        _return += brain_cleaner_build(line_bc)
 
     return _return

@@ -1,5 +1,7 @@
 def get_file_lines(file) -> int:
-    with open(file, 'r', encoding="UTF-8") as file: lines = len(file.readlines())
+    with open(file, 'r', encoding="UTF-8") as file: 
+        lines = len(file.readlines())
+    
     return lines
 
 

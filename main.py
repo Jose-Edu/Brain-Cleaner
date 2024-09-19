@@ -58,7 +58,7 @@ with open("./output/temp.bcm", 'r', encoding="UTF-8") as code_temp:
             line_bc = code_temp.readline()
 
             main_bf.write(
-                brain_cleaner_build(line_bc, str(lc))
+                brain_cleaner_build(line_bc)
             )
 
 # endregion

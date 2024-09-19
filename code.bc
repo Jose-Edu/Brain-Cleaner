@@ -1,20 +1,17 @@
-/* Brain Cleaner: My code with scopes */
+/* Sample code: Brain Cleaner */
 
-Write:("I'll enter into 1 "); /* 0 */
+Write:("Hello World!"); /* Hello World in Brain Cleaner*/
 
-repeat: (10) { /* 1 */
+repeat:(5) { /* Write "Look, i'm at a loop!" 5 times */
 
-    Write:("I'll enter into 1-1 "); /* 1-0 */
-
-    repeat: (5) { 
-        Write:("Text repeat 1 "); /* 1-1-0 */
-        Write:("Text repeat 2 "); /* 1-1-1 */
-    };
-
-    Write:("Getting out of 1-1 and from 1 "); /* 1-2 */
+    Write:("Look, i'm at a loop! ");
 
 };
 
-bf: {[-]}; /* 2 */
-
-Write:("Ending system..."); /* 3 */
+bf: { /* BF code that write " ..." and clean the memory*/
+    (+32) /* That's a Brain Cleaner Macro to "++++++++++++++++++++++++++++++++" */
+    .
+    (+14)
+    ...
+    [-]
+};
