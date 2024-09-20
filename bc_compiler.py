@@ -19,13 +19,11 @@ def bf(block) -> str:
 
 
 def repeat(parameters, block) -> str:
-    loops = parameters[0]
-    move_back = "<"*(count_moves(block)+1) if count_moves(block) >= 0 else ">"*((count_moves(block)*-1)-1)
-    return bf(f"(+{loops})[>{block}{move_back}-]")
+    loops = int(parameters[0])
+    return block*loops
 
 
 def Write(parameters) -> str:
-
     string = get_str(parameters[0])
     newline = opcional_parameter_bool(parameters, 1, True)
 
@@ -71,7 +69,8 @@ def Find(parameters, side) -> str:
     value = int(parameters[0])
     clean = opcional_parameter_bool(parameters, 1, True)
 
-    _return = bf(f"(-{value})[(+{value}){side}(-{value})]") if 255-value >= 128 else bf(f"(+{256-value})[(-{256-value}){side}(+{256-value})]")
+    _return = side
+    _return += bf(f"(-{value})[(+{value}){side}(-{value})]") if 255-value >= 128 else bf(f"(+{256-value})[(-{256-value}){side}(+{256-value})]")
 
     if clean: _return += bf(f"(+{value})")
 
@@ -82,12 +81,24 @@ def FindNext(parameters) -> str:
     _return = Find(parameters, '>')
 
     return _return
-    
+
 
 def FindLast(parameters) -> str:
     _return = Find(parameters, '<')
 
     return _return
+
+
+def Input(parameters=()) -> str:
+
+    mensage = opcional_parameter_str(parameters, 0, "", False)
+
+    if mensage == "":
+        return bf("(-13)[(+13)>,.(-13)]")
+    else:
+        _return = Write((mensage, "false"))
+        _return += bf("(-13)[(+13)>,.(-13)]")
+        return _return
 
 
 def brain_cleaner_build(code_line) -> str:
@@ -111,11 +122,12 @@ def brain_cleaner_build(code_line) -> str:
 
         exec(f"r = {command}('{block}')", {}, exec_data)
 
-    else: # functions with parameters
+    else: # functions
         exec_data = {
             "Write": Write,
             "FindLast": FindLast,
-            "FindNext": FindNext
+            "FindNext": FindNext,
+            "Input": Input
             }
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
         

@@ -1,16 +1,15 @@
-bf: {
+/* Exemplo Brain Cleaner INDEV-0.1.2-0 */
 
-    -
-    >
-    (-13)[(+13)>
+Write:("Iniciando um código Brain Cleaner!");
+
+repeat:(5) {
+
+    Input:("Digite um texto: ");
+
 };
 
-FindLast:(255);
+repeat:(5) {
 
-bf: {
-    >+
-    [>]
-    ,.
-    (-13)]
-    >
+    FindLast:(0);
+
 };

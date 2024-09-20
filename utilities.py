@@ -9,12 +9,25 @@ def count_moves(bf_block) -> int:
     return bf_block.count(">") - bf_block.count("<")
 
 
-def get_str(string) -> str:
-    _return = string[1:-1]
-    _return = _return.replace("\\", "")
-    _return = _return.replace("☻", ",")
+def get_str(string) -> str|None:
 
-    return _return
+    if string[0] == '"':
+        _return = string[1:-1]
+        _return = _return.replace("\\", "")
+        _return = _return.replace("☻", ",")
+        return _return
+    else:
+        raise ValueError
+
+
+def get_bool(value) -> bool|None:
+    match value:
+        case "true":
+            return True
+        case "false":
+            return False
+        case _:
+            raise ValueError
 
 
 def return_file_content(file_path) -> str:
@@ -41,14 +54,24 @@ def set_inline_code(code) -> str:
     return _code
 
 
-def opcional_parameter_bool(parameters, index, default) -> bool | None:
+def opcional_parameter_bool(parameters, index, default, transform=True) -> bool | None:
     try:
-        if parameters[index] == "true":
-            value = True
-        elif parameters[index] == "false":
-            value = False
+        if transform:
+            value = get_bool(parameters[index])
         else:
-            raise ValueError
+            value = parameters[index]
+    except IndexError:
+        value = default
+    
+    return value
+
+
+def opcional_parameter_str(parameters, index, default, transform=True) -> str | None:
+    try:
+        if transform:
+            value = get_str(parameters[index])
+        else:
+            value = parameters[index]
     except IndexError:
         value = default
     
