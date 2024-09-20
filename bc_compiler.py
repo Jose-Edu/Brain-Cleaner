@@ -19,15 +19,15 @@ def bf(block) -> str:
 
 
 def repeat(parameters, block) -> str:
-    loops = parameters[0]
-    move_back = "<"*(count_moves(block)+1) if count_moves(block) >= 0 else ">"*((count_moves(block)*-1)-1)
-    return bf(f"(+{loops})[>{block}{move_back}-]")
+    loops = int(parameters[0])
+    return block*loops
 
 
 def Write(parameters) -> str:
-
     string = get_str(parameters[0])
-    _return = bf("(+20)>")
+    newline = opcional_parameter_bool(parameters, 1, True)
+
+    _return = ">"
     memory = 0
 
     for ascii_num in [ord(c) for c in string]:
@@ -57,9 +57,48 @@ def Write(parameters) -> str:
     else:
         _return += bf(f"(-{memory})")
 
-    _return += bf("<(-20)")
+    _return += '<'
+
+    if newline == True:
+        _return += bf("(+10).(-10)")
 
     return _return
+
+
+def Find(parameters, side) -> str:
+    value = int(parameters[0])
+    clean = opcional_parameter_bool(parameters, 1, True)
+
+    _return = side
+    _return += bf(f"(-{value})[(+{value}){side}(-{value})]") if 255-value >= 128 else bf(f"(+{256-value})[(-{256-value}){side}(+{256-value})]")
+
+    if clean: _return += bf(f"(+{value})")
+
+    return _return
+
+
+def FindNext(parameters) -> str:
+    _return = Find(parameters, '>')
+
+    return _return
+
+
+def FindLast(parameters) -> str:
+    _return = Find(parameters, '<')
+
+    return _return
+
+
+def Input(parameters=()) -> str:
+
+    mensage = opcional_parameter_str(parameters, 0, "", False)
+
+    if mensage == "":
+        return bf("(-13)[(+13)>,.(-13)]")
+    else:
+        _return = Write((mensage, "false"))
+        _return += bf("(-13)[(+13)>,.(-13)]")
+        return _return
 
 
 def brain_cleaner_build(code_line) -> str:
@@ -83,8 +122,13 @@ def brain_cleaner_build(code_line) -> str:
 
         exec(f"r = {command}('{block}')", {}, exec_data)
 
-    else: # functions with parameters
-        exec_data = {"Write": Write}
+    else: # functions
+        exec_data = {
+            "Write": Write,
+            "FindLast": FindLast,
+            "FindNext": FindNext,
+            "Input": Input
+            }
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
         
         exec(f"r = {command}({parameters})", {}, exec_data)
@@ -102,3 +146,4 @@ def enter_scope(code) -> str:
         _return += brain_cleaner_build(line_bc)
 
     return _return
+

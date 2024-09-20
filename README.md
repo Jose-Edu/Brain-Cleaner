@@ -1,8 +1,9 @@
 # Brain-Cleaner
 
 * Compilador que gera um código BF baseado em um script de Brain Cleaner
-* Versão Mais recente:  INDEV-0.1.1-0
-* Ultima versão estável: INDEV-0.1.0-0
+
+* Versão Mais recente:  INDEV-0.1.2-0
+* Ultima versão estável: INDEV-0.1.2-0
 
 ## O que é o Brain Cleaner?
 
@@ -28,13 +29,19 @@ Para desenvolver com Brain Cleaner, Escreva o seu código no arquivo "code.bc"; 
 
 A linguagem Brain Cleaner está no início do seu desenvolvimento, portanto, ainda possui pouca estrutura, possuindo apenas 3 comandos, sendo eles:
 
-* bf:
+* bf:{...}
   * Bloco especial de código, lhe permite escrever diretamente em BF;
   * Permite o uso de macros de repetição no meio do código como: (+5) = +++++ ou (<3) = <<<
   * Exemplo: bf:{(+20)>(+61)<.>.};
-* repeat(num):
-  * Cria um laço que se repete x vezes.
+* repeat:(num){...}
+  * Repete um bloco de código x vezes.
   * Exemplo: repeat:(5) {Write("Escrevendo 5 vezes... ")};
-* Write(string):
+* Write:(string, quebrarLinha)
   * Escreve um texto na tela;
-  * Exemplo: Write:("Hello World!");
+  * Exemplo: Write:("Hello World!", true);
+* FindNext:(val)
+  * Move o ponteiro até a próxima incidência de um valor x na memória;
+  * Exemplo: FindNext:(255);
+* FindLast:(val)
+  * Move o ponteiro até a incidência anterior de um valor x na memória;
+  * Exemplo: FindLast:(255);

@@ -1,17 +1,15 @@
-/* Sample code: Brain Cleaner */
+/* Exemplo Brain Cleaner INDEV-0.1.2-0 */
 
-Write:("Hello World!"); /* Hello World in Brain Cleaner*/
+Write:("Iniciando um código Brain Cleaner!");
 
-repeat:(5) { /* Write "Look, i'm at a loop!" 5 times */
+repeat:(5) {
 
-    Write:("Look, i'm at a loop! ");
+    Input:("Digite um texto: ");
 
 };
 
-bf: { /* BF code that write " ..." and clean the memory*/
-    (+32) /* That's a Brain Cleaner Macro to "++++++++++++++++++++++++++++++++" */
-    .
-    (+14)
-    ...
-    [-]
+repeat:(5) {
+
+    FindLast:(0);
+
 };
