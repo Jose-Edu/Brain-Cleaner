@@ -101,6 +101,18 @@ def Input(parameters=()) -> str:
         return _return
 
 
+def MoveBlocks(parameters) -> str:
+    num_of_moves = int(parameters[0])
+
+    move_side = '>' if num_of_moves > 0 else '<'
+    num_of_moves = abs(num_of_moves)
+
+    _return = move_side+f"[{move_side}]"
+    _return *= num_of_moves
+
+    return _return
+
+
 def brain_cleaner_build(code_line) -> str:
     
     command = code_line[:code_line.find(':')]
@@ -127,7 +139,8 @@ def brain_cleaner_build(code_line) -> str:
             "Write": Write,
             "FindLast": FindLast,
             "FindNext": FindNext,
-            "Input": Input
+            "Input": Input,
+            "MoveBlocks": MoveBlocks
             }
         parameters = code_line[code_line.find('(')+1:code_line.find(')')].split(',')
         
