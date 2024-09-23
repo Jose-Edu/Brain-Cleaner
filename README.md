@@ -12,7 +12,7 @@ O Brain Cleaner busca ser um meio de facilitar a geração de código BF, permit
 
 ## Como usar o compilador?
 
-Para desenvolver com Brain Cleaner, Escreva o seu código no arquivo "code.bc"; após isso, execute o "main.py", isso resultará na atualização do arquivo "main.bf", localizado na pasta "output". Não mova ou remova o arquivo "main.bf", caso queira usá-lo em outro lugar, o copie e cole no destino.
+Para desenvolver com Brain Cleaner, Escreva o seu código no arquivo "code.bc"; após isso, execute o "main.py", isso resultará na atualização do arquivo "main.bf" que será executado pelo [interpretador de BF](https://github.com/Jose-Edu/BF-Interpreter-CS). Não mova ou remova o arquivo "main.bf", caso queira usá-lo em outro lugar, o copie e cole no destino.
 
 ## Sintaxe da linguagem
 
