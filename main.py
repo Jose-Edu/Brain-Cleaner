@@ -51,6 +51,19 @@ with open("code.bc", 'r', encoding="UTF-8") as code_bc: # create temp.bcm
             
 # endregion
 
+# region set memory
+
+memory = {
+    "acKey": 0,
+    "memoryKeys": [0],
+    "memoryBlocks": [],
+    "acBlock": 0,
+    "vars": {},
+    "static": True
+}
+
+# endregion
+
 # region write BF
 
 with open("temp.bcm", 'r', encoding="UTF-8") as code_temp:
@@ -59,10 +72,14 @@ with open("temp.bcm", 'r', encoding="UTF-8") as code_temp:
             line_bc = code_temp.readline()
 
             main_bf.write(
-                brain_cleaner_build(line_bc)
+                brain_cleaner_build(line_bc, memory)
             )
 
 # endregion
 
 remove("temp.bcm")
+
+print(memory)
+input()
+
 run(["./bf-interpreter/BF_interpreter.exe"])
