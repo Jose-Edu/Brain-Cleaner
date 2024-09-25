@@ -59,7 +59,8 @@ memory = {
     "memoryBlocks": [],
     "acBlock": 0,
     "vars": {},
-    "static": True
+    "static": True,
+    "infLoop": False
 }
 
 # endregion

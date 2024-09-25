@@ -111,13 +111,14 @@ def memory_update(memory, code) -> dict:
                     if memory["acKey"] == len(memory["memoryKeys"]):
                         memory["memoryKeys"].append(0)
                 else:
-                    loop += '<'
+                    loop += '>'
             case '[':
                 loop += '['
             case ']':
                 while memory['memoryKeys'][memory['acKey']] != 0:
                     if memory["static"]:
-                        memory_update(memory, loop[loop.rfind('[')+1:])
+                        memory = memory_update(memory, loop[loop.rfind('[')+1:])
+
                     else:
                         memory['memoryKeys'][memory['acKey']] = 0
 
