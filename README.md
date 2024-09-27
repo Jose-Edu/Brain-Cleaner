@@ -2,7 +2,7 @@
 
 * Compilador que gera um código BF baseado em um script de Brain Cleaner
 
-* Última versão estável (release):  INDEV-0.1.3-3
+* Última versão estável (release):  INDEV-0.1.3-4
 
 ## O que é o Brain Cleaner?
 
@@ -22,7 +22,7 @@ Para desenvolver com Brain Cleaner, Escreva o seu código no arquivo "code.bc"; 
 * Em Brain Cleaner, todos os espaços em branco e quebras de linhas são ignorados (quando fora de uma string);
 * Todos os segmentos devem ser encerados com ponto e vírgula (;);
 * Para escrever comentários, usamos /**/. Exemplo:
-  * Write:("Text"); /* Escrevendo "Text" na tela */
+  * Write:("Text"); /*Escrevendo "Text" na tela*/
 
 ## Comandos da linguagem
 

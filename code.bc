@@ -1,9 +1,3 @@
-/* Made with Brain Cleaner INDEV-0.1.3-3 */
+/* Made with Brain Cleaner 0.1.3-4 */
 
-Write:("Hello world!");
-
-repeat:(5) {
-    Input:("Write some text: ");
-};
-
-MoveBlocks:(-1);
+Write:("Look, Extra ASCII: ÁáàÀçü£");
