@@ -2,7 +2,7 @@
 
 * Compilador que gera um código BF baseado em um script de Brain Cleaner
 
-* Última versão estável (release):  INDEV-0.1.3-4
+* Última versão estável (main):  INDEV-0.1.4-0
 
 ## O que é o Brain Cleaner?
 
@@ -35,9 +35,11 @@ A linguagem Brain Cleaner está no início do seu desenvolvimento, portanto, ain
 * repeat:(num){...}
   * Repete um bloco de código x vezes.
   * Exemplo: repeat:(5) {Write("Escrevendo 5 vezes... ")};
-* Write:(string, quebrarLinha)
+* Write:(string, quebrarLinha, armazenar)
   * Escreve um texto na tela;
-  * Exemplo: Write:("Hello World!", true);
+  * Exemplo: Write:("Hello World!");
+  * quebrarLinha: Parâmetro opcional bool de padrão true. Define se ao fim do texto deve-se encerrar a linha atual.
+  * armazenar: Parâmetro opcional bool de padrão false. Define se o texto deve ser armazenada na memória como uma string.
 * FindNext:(val)
   * Move o ponteiro até a próxima incidência de um valor x na memória;
   * Exemplo: FindNext:(255);

@@ -1,3 +1,11 @@
-/* Made with Brain Cleaner 0.1.3-4 */
+/* Made with Brain Cleaner 0.1.4-0 */
 
 Write:("Look, Extra ASCII: ÁáàÀçü£");
+
+repeat:(5) {
+
+    Input:("Write some text: ");
+
+};
+
+Write:("How! This string is on memory!", true, true);

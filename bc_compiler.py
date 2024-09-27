@@ -26,19 +26,19 @@ def repeat(memory, parameters, block) -> str:
 def Write(memory, parameters) -> str:
     string = get_str(parameters[0])
     newline = opcional_parameter_bool(parameters, 1, True)
+    set_on_memory = opcional_parameter_bool(parameters, 2, False)
 
-    _return = ">"
+    _return = "" if not set_on_memory else ">"
     memo = 0
 
     for ascii_num in [ord(c) for c in string]:
 
         while True:
-            if ascii_num == 20:
-                _return += "<.>"
-                break
-
             if ascii_num == memo:
                 _return += '.'
+                if set_on_memory: 
+                    _return += ">"
+                    memo = 0
                 break
             elif ascii_num > memo and ascii_num-memo <= 127:
                 _return += '+'
@@ -53,11 +53,9 @@ def Write(memory, parameters) -> str:
                 memo = 255
 
     if memo >= 128:
-        _return += bf(memory, f"(+{255-memo})")
+        _return += bf(memory, f"(+{256-memo})")
     else:
         _return += bf(memory, f"(-{memo})")
-
-    _return += '<'
 
     if newline == True:
         _return += bf(memory, "(+10).(-10)")
