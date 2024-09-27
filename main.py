@@ -2,6 +2,7 @@ from utilities import *
 from os import remove
 from bc_compiler import brain_cleaner_build
 from re import findall
+from subprocess import run
 
 
 # region set temp-mid-code
@@ -10,7 +11,7 @@ with open("code.bc", 'r', encoding="UTF-8") as code_bc: # create temp.bcm
 
     code = code_bc.read()
 
-    with open("./output/temp.bcm", 'x', encoding="UTF-8") as temp:
+    with open("temp.bcm", 'x', encoding="UTF-8") as temp:
 
         while True: # remove comments
             start = code.find("/*")
@@ -50,17 +51,36 @@ with open("code.bc", 'r', encoding="UTF-8") as code_bc: # create temp.bcm
             
 # endregion
 
+# region set memory
+
+memory = {
+    "acKey": 0,
+    "memoryKeys": [0],
+    "memoryBlocks": [],
+    "acBlock": 0,
+    "vars": {},
+    "static": True,
+    "infLoop": False
+}
+
+# endregion
+
 # region write BF
 
-with open("./output/temp.bcm", 'r', encoding="UTF-8") as code_temp:
-    with open("./output/main.bf", 'w', encoding="UTF-8") as main_bf:
-        for lc in range(get_file_lines("./output/temp.bcm")):
+with open("temp.bcm", 'r', encoding="UTF-8") as code_temp:
+    with open("main.bf", 'w', encoding="UTF-8") as main_bf:
+        for lc in range(get_file_lines("temp.bcm")):
             line_bc = code_temp.readline()
 
             main_bf.write(
-                brain_cleaner_build(line_bc)
+                brain_cleaner_build(line_bc, memory)
             )
 
 # endregion
 
-remove("./output/temp.bcm")
+remove("temp.bcm")
+
+print(memory)
+input()
+
+run(["./bf-interpreter/BF_interpreter.exe"])

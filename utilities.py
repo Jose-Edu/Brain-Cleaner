@@ -77,3 +77,68 @@ def opcional_parameter_str(parameters, index, default, transform=True) -> str | 
     
     return value
 
+
+def memory_update(memory, code) -> dict:
+
+    loop = ""
+
+    for command in code:
+        match command:
+            case '+':
+                if loop == "":
+                    if memory["memoryKeys"][memory['acKey']] != 255:
+                        memory["memoryKeys"][memory['acKey']] += 1
+                    else:
+                        memory["memoryKeys"][memory['acKey']] = 0
+                else:
+                    loop += '+'
+            case '-':
+                if loop == "":
+                    if memory["memoryKeys"][memory['acKey']] != 0:
+                        memory["memoryKeys"][memory['acKey']] -= 1
+                    else:
+                        memory["memoryKeys"][memory['acKey']] = 255
+                else:
+                    loop += '-'
+            case '<':
+                if loop == "":
+                    if memory["acKey"] != 0: memory["acKey"] -= 1
+                else:
+                    loop += '<'
+            case '>':
+                if loop == "":
+                    memory["acKey"] += 1
+                    if memory["acKey"] == len(memory["memoryKeys"]):
+                        memory["memoryKeys"].append(0)
+                else:
+                    loop += '>'
+            case '[':
+                loop += '['
+            case ']':
+                while memory['memoryKeys'][memory['acKey']] != 0:
+                    if memory["static"]:
+                        memory = memory_update(memory, loop[loop.rfind('[')+1:])
+
+                    else:
+                        memory['memoryKeys'][memory['acKey']] = 0
+
+                loop = loop[:loop.rfind('[')]
+            case ',':
+                memory['static'] = False
+                if loop == "":
+                    memory["memoryKeys"][memory['acKey']] = 0
+                else:
+                    loop+= ','
+    
+    try:
+        memory["memoryBlocks"] = str(memory["memoryKeys"][1:-1])[1:-1].replace(' ', '').split(',0,')
+        for index, value in enumerate(memory["memoryBlocks"]):
+            memory["memoryBlocks"][index] = value.split(',')
+            for _index, val in enumerate(memory["memoryBlocks"][index]):
+                memory["memoryBlocks"][index][_index] = int(val)
+    except ValueError:
+        pass
+
+    memory["acBlock"] = memory["memoryKeys"][1:memory["acKey"]+1].count(0)
+
+    return memory
