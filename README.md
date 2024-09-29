@@ -2,7 +2,7 @@
 
 * Compilador que gera um código BF baseado em um script de Brain Cleaner
 
-* Última versão estável (main):  INDEV-0.1.4-0
+* Última versão (release):  INDEV-0.1.4-1
 
 ## O que é o Brain Cleaner?
 

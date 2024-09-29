@@ -1,5 +1,6 @@
 from re import findall
 from utilities import *
+from brain_cleaner_classes import *
 
 
 def bf(memory, block) -> str:
@@ -24,14 +25,14 @@ def repeat(memory, parameters, block) -> str:
 
 
 def Write(memory, parameters) -> str:
-    string = get_str(parameters[0])
-    newline = opcional_parameter_bool(parameters, 1, True)
-    set_on_memory = opcional_parameter_bool(parameters, 2, False)
+    string = StringBC(parameters[0])
+    newline = BoolBC.opcional_parameter(parameters, 1, True)
+    set_on_memory = BoolBC.opcional_parameter(parameters, 2, False)
 
     _return = "" if not set_on_memory else ">"
     memo = 0
 
-    for ascii_num in [ord(c) for c in string]:
+    for ascii_num in [ord(c) for c in str(string)]:
 
         while True:
             if ascii_num == memo:
@@ -64,8 +65,8 @@ def Write(memory, parameters) -> str:
 
 
 def Find(parameters, side, memory) -> str:
-    value = int(parameters[0])
-    clean = opcional_parameter_bool(parameters, 1, True)
+    value = ShortBC(parameters[0])
+    clean = BoolBC.opcional_parameter(parameters, 1, True)
 
     _return = side
     _return += bf(memory, f"(-{value})[(+{value}){side}(-{value})]") if 255-value >= 128 else bf(memory, f"(+{256-value})[(-{256-value}){side}(+{256-value})]")
@@ -89,7 +90,7 @@ def FindLast(memory, parameters) -> str:
 
 def Input(memory, parameters=()) -> str:
 
-    mensage = opcional_parameter_str(parameters, 0, "", False)
+    mensage = BoolBC.opcional_parameter(parameters, 0, "", False)
 
     if mensage == "":
         return bf(memory, "(-13)[(+13)>,.(-13)]")
@@ -100,7 +101,7 @@ def Input(memory, parameters=()) -> str:
 
 
 def MoveBlocks(memory, parameters) -> str:
-    num_of_moves = int(parameters[0])
+    num_of_moves = ShortBC(parameters[0])
 
     move_side = '>' if num_of_moves > 0 else '<'
     num_of_moves = abs(num_of_moves)
@@ -144,7 +145,7 @@ def brain_cleaner_build(code_line, memory, in_scope=False) -> str:
         
         exec(f"r = {command}({memory}, {parameters})", {}, exec_data)
 
-    if not in_scope: memory = memory_update(memory, exec_data['r'])
+    if not in_scope: memory.update(exec_data['r'])
     return exec_data['r']
 
 

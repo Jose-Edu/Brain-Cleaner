@@ -3,6 +3,7 @@ from os import remove
 from bc_compiler import brain_cleaner_build
 from re import findall
 from subprocess import run
+from brain_cleaner_classes import *
 
 
 # region set temp-mid-code
@@ -53,15 +54,7 @@ with open("code.bc", 'r', encoding="UTF-8") as code_bc: # create temp.bcm
 
 # region set memory
 
-memory = {
-    "acKey": 0,
-    "memoryKeys": [0],
-    "memoryBlocks": [],
-    "acBlock": 0,
-    "vars": {},
-    "static": True,
-    "infLoop": False
-}
+memory = Memory()
 
 # endregion
 
